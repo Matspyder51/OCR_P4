@@ -7,6 +7,8 @@ init(autoreset=True)
 
 
 main = controller.Controller()
+
+
 # main.home_controller.input_home_menu()
 # home.HomeController()
 
@@ -23,7 +25,7 @@ main = controller.Controller()
 # 	]
 
 # 	players = []
-	
+
 # 	for ply in temp_players:
 # 		players.insert(len(players), player.Player(ply))
 
