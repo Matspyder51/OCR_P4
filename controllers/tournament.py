@@ -137,7 +137,7 @@ class TournamentController:
 
         self._tournament.matches[self._tournament.current_round] = matches
         self._tournament.save_tournament()
-        self._view.print_matches_list(matches)
+        self._view.print_matches_list(matches, self._tournament.current_round)
 
         self.enter_match_result()
 
@@ -145,14 +145,22 @@ class TournamentController:
         self._tournament = tournament_model.Tournament()
         self._tournament.load_from_database(data)
 
-        if self._tournament.is_all_matches_of_round_ended():
-            if self._tournament.current_round == -1:
-                self.generate_matches(True)
+        if not self._tournament.ended:
+
+            if len(self._tournament.matches) >= self._tournament.round_amount and self._tournament.is_all_matches_of_round_ended():
+                self._tournament.ended = True
+                self._tournament.save_tournament()
+                self._view.print_tournament_overview(self._tournament)
+                return
+
+            if self._tournament.is_all_matches_of_round_ended():
+                if self._tournament.current_round == -1:
+                    self.generate_matches(True)
+                else:
+                    self.generate_matches()
             else:
-                self.generate_matches()
-        else:
-            self._view.print_matches_list(self._tournament.matches[self._tournament.current_round])
-            self.enter_match_result()
+                self._view.print_matches_list(self._tournament.matches[self._tournament.current_round], self._tournament.current_round)
+                self.enter_match_result()
 
     def list_tournaments(self):
         tournaments = tournament_model.Tournament.get_tournaments()
@@ -182,10 +190,10 @@ class TournamentController:
         self._tournament.save_tournament()
 
         if not self._tournament.is_all_matches_of_round_ended():
-            self._view.print_matches_list(self._tournament.matches[self._tournament.current_round])
+            self._view.print_matches_list(self._tournament.matches[self._tournament.current_round], self._tournament.current_round)
             self.enter_match_result()
         else:
-            if self._tournament.round_amount - 1 >= self._tournament.current_round:
+            if self._tournament.round_amount - 1 <= self._tournament.current_round:
                 self._view.print_tournament_overview(self._tournament)
             else:
                 self.generate_matches()

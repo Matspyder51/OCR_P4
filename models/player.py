@@ -16,12 +16,13 @@ class Player:
     def get_id(self):
         return self.__id
 
-    def __init__(self, data: list, id: int = None, tournament_rank: int = None):
+    def __init__(self, data: list, id: int = None, tournament_rank: int = 0.0):
         self.lastname = data[0]
         self.firstname = data[1]
         self.birthdate = data[2]
         self.sex = data[3]
         self.rank = data[4]
+        self.tournament_rank = tournament_rank
         if id is not None:
             self.__id = id
 

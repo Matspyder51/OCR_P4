@@ -22,8 +22,9 @@ class TournamentView:
             )
 
     @staticmethod
-    def print_matches_list(matches: list):
+    def print_matches_list(matches: list, round_number: int):
         i = 0
+        print(f"Round number {round_number + 1} :")
         for match in matches:
             text: str = ""
             text += f"{i} - "
