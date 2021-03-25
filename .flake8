@@ -1,0 +1,4 @@
+[flake8]
+ignore = E712
+exclude = .git,__pycache__,docs/source/conf.py,old,build,dist,env
+max-line-length=119

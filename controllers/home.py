@@ -20,4 +20,4 @@ class HomeController:
             return converted
         except ValueError:
             self._view.print_home_menu_selection_error("Please enter a valid number")
-            self.input_home_menu()
+            return self.input_home_menu()

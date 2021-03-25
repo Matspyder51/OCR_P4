@@ -1,5 +1,5 @@
-from controllers.tournament import tournament
-from controllers.home import home
+from controllers import tournament
+from controllers import home
 
 
 class Controller:
@@ -16,3 +16,5 @@ class Controller:
     def __parse_user_action(self, action: int):
         if action == 1:
             self.__tournament_controller.create_new_tournament()
+        if action == 3:
+            self.__tournament_controller.list_tournaments()

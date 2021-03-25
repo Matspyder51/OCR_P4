@@ -1,14 +1,12 @@
-from colorama import Fore, Back, Style
+from colorama import Fore
+
 
 class HomeView:
-
-    def __init__(self):
-        pass
 
     @staticmethod
     def print_start_message():
         print(f"Welcome in {Fore.GREEN}ChessTournamentManager {Fore.YELLOW}version 0.0.1")
-    
+
     @staticmethod
     def print_home_menu():
         print("Type \"quit\" to exit the program")

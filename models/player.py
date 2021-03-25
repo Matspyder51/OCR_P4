@@ -10,18 +10,19 @@ class Player:
     birthdate: str
     sex: str
     rank: int
+    tournament_rank: float = 0.0
 
     @property
     def get_id(self):
         return self.__id
 
-    def __init__(self, data: list, id: int = None):
+    def __init__(self, data: list, id: int = None, tournament_rank: int = None):
         self.lastname = data[0]
         self.firstname = data[1]
         self.birthdate = data[2]
         self.sex = data[3]
         self.rank = data[4]
-        if id != None:
+        if id is not None:
             self.__id = id
 
     def update_in_json(self):
@@ -42,9 +43,30 @@ class Player:
         )
         self.__id = id
 
+    def to_database(self, light: bool = False):
+        if not light:
+            return {
+                "id": self.__id,
+                "score": self.tournament_rank
+            }
+        else:
+            return self.__id
+
     @staticmethod
     def get_player_from_name(name: str):
         table = get_table("players")
         ply = Query()
-        results = table.search(ply.firstname == name or ply.lastname == name)
+
+        def find_method(value):
+            return value == name or value.find(name) != -1
+
+        results = table.search(
+            ply.firstname.test(find_method) | ply.lastname.test(find_method)
+        )
         return results
+
+    @staticmethod
+    def get_player_from_id(id: int):
+        table = get_table("players")
+
+        return table.get(doc_id=id)
