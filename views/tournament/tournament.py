@@ -47,3 +47,4 @@ class TournamentView:
         print(f"\tPlace: {tournament.place}")
         print(f"\tDate: {tournament.date}")
         print(f"\tDescription: {tournament.description}")
+        print(f"\tAmount of rounds: {tournament.round_amount}")
