@@ -43,6 +43,18 @@ class TournamentView:
             print(f"{trn.doc_id} : {trn['name']} | {trn['date']}")
 
     @staticmethod
+    def print_matches(matches: list, indent: str = ""):
+        for match in matches:
+            text = indent
+            text += f"{Fore.GREEN if match.winnedBy == 0 else Fore.RED} {match.upPlayer.lastname} {match.upPlayer.firstname}"
+            text += f" {Fore.BLUE}versus{Fore.RESET}"
+            text += f"{Fore.GREEN if match.winnedBy == 1 else Fore.RED} {match.downPlayer.lastname} {match.downPlayer.firstname}"
+            text += f"{Fore.RESET} Start: {datetime.datetime.fromtimestamp(match.startTime)}"
+            if match.endTime is not None:
+                text += f"Ended: {datetime.datetime.fromtimestamp(match.endTime)}"
+            print(text)
+
+    @staticmethod
     def print_tournament_overview(tournament: Tournament):
         print("Tournament Overview:")
         print(f"\tName: {tournament.name}")
@@ -57,11 +69,4 @@ class TournamentView:
         print("\tMatchs:")
         for rnd_number, rnd in enumerate(tournament.matches):
             print(f"\t\tRound N°{rnd_number}:")
-            for match in rnd:
-                print(
-                    "\t\t\t"
-                    f"{Fore.GREEN if match.winnedBy == 0 else Fore.RED} {match.upPlayer.lastname} {match.upPlayer.firstname}"
-                    f" {Fore.BLUE}versus{Fore.RESET}"
-                    f"{Fore.GREEN if match.winnedBy == 1 else Fore.RED} {match.downPlayer.lastname} {match.downPlayer.firstname}"
-                    f"{Fore.RESET} Start: {datetime.datetime.fromtimestamp(match.startTime)} Ended: {datetime.datetime.fromtimestamp(match.endTime)}"
-                )
+            TournamentView.print_matches(rnd, "\t\t\t")

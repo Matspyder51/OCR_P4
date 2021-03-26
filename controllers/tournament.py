@@ -48,7 +48,6 @@ class TournamentController:
                     is_new_player,
                 )
             else:
-                # TODO: Move this to players controller
                 search = input("Please enter player's name to find : ")
                 possible_players = player.Player.get_player_from_name(search)
                 if len(possible_players) < 1:
@@ -110,7 +109,6 @@ class TournamentController:
             upper = []
             lower = []
 
-            # TODO: Comprehension List
             for i in range(len(_temp_players)):
                 if i < (len(_temp_players) - 1) / 2:
                     upper.insert(len(upper), _temp_players[i])
@@ -142,11 +140,11 @@ class TournamentController:
 
         self.enter_match_result()
 
-    def __load_tournament(self, data):
+    def __load_tournament(self, data, start: bool = False):
         self._tournament = tournament_model.Tournament()
         self._tournament.load_from_database(data)
 
-        if not self._tournament.ended:
+        if start and not self._tournament.ended:
 
             if len(self._tournament.matches) >= self._tournament.round_amount and self._tournament.is_all_matches_of_round_ended():
                 self._tournament.ended = True
@@ -173,12 +171,12 @@ class TournamentController:
         self.__load_tournament(final)
 
     def list_all_tournaments(self):
-        tournaments = tournament_model.Tournament.get_ended_tournaments()
+        tournaments = tournament_model.Tournament.get_all_tournaments()
         self._view.print_tournaments_list(tournaments)
 
         selected = int(input("Please enter the id of the tournament to load: "))
         final = next(x for x in tournaments if x.doc_id == selected)
-        self.__load_tournament(final)
+        self.__load_tournament(final, False)
 
         self._view.print_tournament_overview(self._tournament)
 

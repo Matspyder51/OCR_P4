@@ -118,6 +118,12 @@ class Tournament:
         return results
 
     @staticmethod
+    def get_all_tournaments():
+        table = get_table("tournaments")
+
+        return table
+
+    @staticmethod
     def get_ended_tournaments():
         table = get_table("tournaments")
         trn = Query()
