@@ -16,5 +16,7 @@ class Controller:
     def __parse_user_action(self, action: int):
         if action == 1:
             self.__tournament_controller.create_new_tournament()
-        if action == 3:
+        elif action == 3:
             self.__tournament_controller.list_tournaments()
+        elif action == 4:
+            self.__tournament_controller.list_all_tournaments()

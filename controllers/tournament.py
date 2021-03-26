@@ -171,6 +171,16 @@ class TournamentController:
         final = next(x for x in tournaments if x.doc_id == selected)
         self.__load_tournament(final)
 
+    def list_all_tournaments(self):
+        tournaments = tournament_model.Tournament.get_ended_tournaments()
+        self._view.print_tournaments_list(tournaments)
+
+        selected = int(input("Please enter the id of the tournament to load: "))
+        final = next(x for x in tournaments if x.doc_id == selected)
+        self.__load_tournament(final)
+
+        self._view.print_tournament_overview(self._tournament)
+
     def enter_match_result(self):
         matchId = int(input("Please enter the id of the match : "))
         match = self._tournament.matches[self._tournament.current_round][matchId]

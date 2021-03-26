@@ -116,3 +116,12 @@ class Tournament:
         results = table.search(trn.ended == False)
 
         return results
+
+    @staticmethod
+    def get_ended_tournaments():
+        table = get_table("tournaments")
+        trn = Query()
+
+        results = table.search(trn.ended == True)
+
+        return results

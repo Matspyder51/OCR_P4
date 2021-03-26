@@ -49,3 +49,17 @@ class TournamentView:
         print(f"\tDate: {tournament.date}")
         print(f"\tDescription: {tournament.description}")
         print(f"\tAmount of rounds: {tournament.round_amount}")
+        print("\tPlayers:")
+        for ply in tournament.players:
+            print(f"\t\t{ply.lastname} {ply.firstname} {ply.birthdate} {ply.sex} {ply.rank}")
+
+        print("\tMatchs:")
+        for rnd_number, rnd in enumerate(tournament.matches):
+            print(f"\t\tRound N°{rnd_number}:")
+            for match in rnd:
+                print(
+                    "\t\t\t"
+                    f"{Fore.GREEN if match.winnedBy == 0 else Fore.RED} {match.upPlayer.lastname} {match.upPlayer.firstname}"
+                    f" {Fore.BLUE}versus{Fore.RESET}"
+                    f"{Fore.GREEN if match.winnedBy == 1 else Fore.RED} {match.downPlayer.lastname} {match.downPlayer.firstname}"
+                )
