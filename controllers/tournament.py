@@ -2,6 +2,7 @@ from views.tournament import tournament
 from models import player, tournament as tournament_model
 from models.match import Match
 from utils import to_boolean, ask_data
+import datetime
 
 
 class TournamentController:
@@ -196,6 +197,7 @@ class TournamentController:
             match.upPlayer.tournament_rank += .5
             match.downPlayer.tournament_rank += .5
         match.ended = True
+        match.endTime = datetime.datetime.now().timestamp()
 
         self._tournament.save_tournament()
 

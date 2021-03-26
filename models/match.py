@@ -1,4 +1,5 @@
 from models.player import Player
+import datetime
 
 
 class Match:
@@ -7,6 +8,8 @@ class Match:
     downPlayer: Player
     ended: bool = False
     winnedBy: int = None
+    startTime: float = datetime.datetime.now().timestamp()
+    endTime: float = None
 
     def __init__(self, upPlayer: Player = None, downPlayer: Player = None):
         self.upPlayer = upPlayer
@@ -25,7 +28,9 @@ class Match:
             "upPlayer": self.upPlayer.to_database(True),
             "downPlayer": self.downPlayer.to_database(True),
             "ended": self.ended,
-            "winnedBy": self.winnedBy
+            "winnedBy": self.winnedBy,
+            "startedAt": self.startTime,
+            "endedAt": self.endTime
         }
 
     @staticmethod
@@ -33,6 +38,8 @@ class Match:
         match = Match()
         match.ended = data["ended"]
         match.winnedBy = data["winnedBy"]
+        match.startTime = data["startedAt"]
+        match.endTime = data["endedAt"]
         match.upPlayer = upPlayer
         match.downPlayer = downPlayer
 

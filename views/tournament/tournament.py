@@ -1,5 +1,6 @@
 from colorama import Fore
 from models.tournament import Tournament
+import datetime
 
 
 class TournamentView:
@@ -62,4 +63,5 @@ class TournamentView:
                     f"{Fore.GREEN if match.winnedBy == 0 else Fore.RED} {match.upPlayer.lastname} {match.upPlayer.firstname}"
                     f" {Fore.BLUE}versus{Fore.RESET}"
                     f"{Fore.GREEN if match.winnedBy == 1 else Fore.RED} {match.downPlayer.lastname} {match.downPlayer.firstname}"
+                    f"{Fore.RESET} Start: {datetime.datetime.fromtimestamp(match.startTime)} Ended: {datetime.datetime.fromtimestamp(match.endTime)}"
                 )
