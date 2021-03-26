@@ -205,5 +205,7 @@ class TournamentController:
         else:
             if self._tournament.round_amount - 1 <= self._tournament.current_round:
                 self._view.print_tournament_overview(self._tournament)
+                self._tournament.ended = True
+                self._tournament.save_tournament()
             else:
                 self.generate_matches()
