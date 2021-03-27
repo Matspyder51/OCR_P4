@@ -75,6 +75,7 @@ class TournamentController:
         self._tournament.name = input("Please enter tournament name : ")
         self._tournament.place = input("Please enter the place of the tournament : ")
         self._tournament.date = input("Please enter the date of the tournament : ")
+        self._tournament.round_amount = int(input("Please enter the amount of rounds for this tournament: "))
 
         self.add_players_in_tournament()
 
