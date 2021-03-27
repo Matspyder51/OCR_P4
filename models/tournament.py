@@ -48,7 +48,13 @@ class Tournament:
         for rnd in data["matches"]:
             self.matches.insert(i, [])
             for match in rnd:
-                self.matches[i].insert(len(self.matches[i]), Match.from_dict(self.__get_ply_from_id(match["upPlayer"]), self.__get_ply_from_id(match["downPlayer"]), match))
+                self.matches[i].insert(
+                    len(self.matches[i]),
+                    Match.from_dict(
+                        self.__get_ply_from_id(match["upPlayer"]),
+                        self.__get_ply_from_id(match["downPlayer"]), match
+                    )
+                )
             i += 1
 
     def add_player(self, ply: player.Player):

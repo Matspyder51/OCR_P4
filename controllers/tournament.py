@@ -29,7 +29,7 @@ class TournamentController:
         self._view.print_player_added(f"{ply.lastname} {ply.firstname}")
 
     def add_players_in_tournament(self):
-        while len(self.players) != 2:
+        while len(self.players) != 8:
             is_new_player: bool = to_boolean(input("Is this a new player ? (Y/N) : "))
             lastname: str
             firstname: str
@@ -65,7 +65,7 @@ class TournamentController:
                             final["sex"],
                             final["rank"],
                         ],
-                        final.doc_id
+                        final.doc_id,
                     ),
                     is_new_player,
                 )
@@ -75,7 +75,9 @@ class TournamentController:
         self._tournament.name = input("Please enter tournament name : ")
         self._tournament.place = input("Please enter the place of the tournament : ")
         self._tournament.date = input("Please enter the date of the tournament : ")
-        self._tournament.round_amount = int(input("Please enter the amount of rounds for this tournament: "))
+        self._tournament.round_amount = int(
+            input("Please enter the amount of rounds for this tournament: ")
+        )
 
         self.add_players_in_tournament()
 
@@ -147,7 +149,10 @@ class TournamentController:
 
         if start and not self._tournament.ended:
 
-            if len(self._tournament.matches) >= self._tournament.round_amount and self._tournament.is_all_matches_of_round_ended():
+            if (
+                len(self._tournament.matches) >= self._tournament.round_amount
+                and self._tournament.is_all_matches_of_round_ended()
+            ):
                 self._tournament.ended = True
                 self._tournament.save_tournament()
                 self.tournament_overview()
@@ -159,16 +164,25 @@ class TournamentController:
                 else:
                     self.generate_matches()
             else:
-                self._view.print_matches_list(self._tournament.matches[self._tournament.current_round], self._tournament.current_round)
+                self._view.print_matches_list(
+                    self._tournament.matches[self._tournament.current_round],
+                    self._tournament.current_round,
+                )
                 self.enter_match_result()
 
     def tournament_overview(self):
         self._view.print_tournament_overview(self._tournament)
 
-        selected = int(input("Enter 0 to print tournament players, 1 to print matches: "))
+        selected = int(
+            input("Enter 0 to print tournament players, 1 to print matches: ")
+        )
 
         if selected == 0:
-            sort = int(input("Enter 0 to print players sorted by their name, or 1 to sort them from their score: "))
+            sort = int(
+                input(
+                    "Enter 0 to print players sorted by their name, or 1 to sort them from their score: "
+                )
+            )
             self._view.print_tournament_overview(self._tournament, 0, sort)
         elif selected == 1:
             self._view.print_tournament_overview(self._tournament, 1)
@@ -197,22 +211,29 @@ class TournamentController:
         match = self._tournament.matches[self._tournament.current_round][matchId]
         if match.ended:
             return self.enter_match_result()
-        winner = int(input("Please enter 0 or 1 to define the winner, enter 3 if the result is a draw : "))
+        winner = int(
+            input(
+                "Please enter 0 or 1 to define the winner, enter 3 if the result is a draw : "
+            )
+        )
         match.winnedBy = winner
         if winner == 0:
             match.upPlayer.tournament_rank += 1
         elif winner == 1:
             match.downPlayer.tournament_rank += 1
         else:
-            match.upPlayer.tournament_rank += .5
-            match.downPlayer.tournament_rank += .5
+            match.upPlayer.tournament_rank += 0.5
+            match.downPlayer.tournament_rank += 0.5
         match.ended = True
         match.endTime = datetime.datetime.now().timestamp()
 
         self._tournament.save_tournament()
 
         if not self._tournament.is_all_matches_of_round_ended():
-            self._view.print_matches_list(self._tournament.matches[self._tournament.current_round], self._tournament.current_round)
+            self._view.print_matches_list(
+                self._tournament.matches[self._tournament.current_round],
+                self._tournament.current_round,
+            )
             self.enter_match_result()
         else:
             if self._tournament.round_amount - 1 <= self._tournament.current_round:

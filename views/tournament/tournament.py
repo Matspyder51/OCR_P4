@@ -46,17 +46,21 @@ class TournamentView:
     def print_matches(matches: list, indent: str = ""):
         for match in matches:
             text = indent
-            text += f"{Fore.GREEN if match.winnedBy == 0 else Fore.RED} {match.upPlayer.lastname} {match.upPlayer.firstname}"
+            text += f"{Fore.GREEN if match.winnedBy == 0 else Fore.RED}"
+            text += f" {match.upPlayer.lastname} {match.upPlayer.firstname}"
             text += f" {Fore.BLUE}versus{Fore.RESET}"
-            text += f"{Fore.GREEN if match.winnedBy == 1 else Fore.RED} {match.downPlayer.lastname} {match.downPlayer.firstname}"
+            text += f"{Fore.GREEN if match.winnedBy == 1 else Fore.RED}"
+            text += f" {match.downPlayer.lastname} {match.downPlayer.firstname}"
             text += f"{Fore.RESET} Start: {datetime.datetime.fromtimestamp(match.startTime)}"
             if match.endTime is not None:
                 text += f"Ended: {datetime.datetime.fromtimestamp(match.endTime)}"
             print(text)
 
     @staticmethod
-    def print_tournament_overview(tournament: Tournament, action: int = -1, sortType: int = -1):
-        if action == -1 :
+    def print_tournament_overview(
+        tournament: Tournament, action: int = -1, sortType: int = -1
+    ):
+        if action == -1:
             print("Tournament Overview:")
             print(f"\tName: {tournament.name}")
             print(f"\tPlace: {tournament.place}")
@@ -67,11 +71,15 @@ class TournamentView:
             _temp_players = tournament.players.copy()
             print("Players:")
             if sortType == 0:
-                _temp_players.sort(key=lambda x: (x.lastname.lower(), x.firstname.lower()))
+                _temp_players.sort(
+                    key=lambda x: (x.lastname.lower(), x.firstname.lower())
+                )
             elif sortType == 1:
                 _temp_players.sort(key=lambda x: x.tournament_rank)
             for ply in _temp_players:
-                print(f"\t{ply.lastname} {ply.firstname} {ply.birthdate} {ply.sex} {ply.rank} {ply.tournament_rank}")
+                print(
+                    f"\t{ply.lastname} {ply.firstname} {ply.birthdate} {ply.sex} {ply.rank} {ply.tournament_rank}"
+                )
 
         elif action == 1:
             print("Matchs:")
