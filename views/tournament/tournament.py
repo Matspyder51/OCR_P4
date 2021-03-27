@@ -59,7 +59,7 @@ class TournamentView:
             text += f" {match.downPlayer.lastname} {match.downPlayer.firstname}"
             text += f"{Fore.RESET} Start: {datetime.datetime.fromtimestamp(match.startTime)}"
             if match.endTime is not None:
-                text += f"Ended: {datetime.datetime.fromtimestamp(match.endTime)}"
+                text += f" Ended: {datetime.datetime.fromtimestamp(match.endTime)}"
             print(text)
 
     @staticmethod
