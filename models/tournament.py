@@ -47,6 +47,7 @@ class Tournament:
 
         self.__init_players_from_indices(data["players"])
 
+        self.matches = []
         i = 0
         for rnd in data["matches"]:
             self.matches.insert(i, [])
