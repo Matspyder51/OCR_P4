@@ -24,12 +24,20 @@ To create a new environment, write this command :
 
 Then you need to activate it :
 
+### Windows :
+
 ```bash
 cd env/Scripts
 
 activate
 
 cd ../..
+```
+
+### Linux/Mac Os:
+
+```bash
+source env/Scripts/activate
 ```
 
 And finally, you can install the required packages for the project :
