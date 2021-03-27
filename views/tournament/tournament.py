@@ -82,7 +82,7 @@ class TournamentView:
                     key=lambda x: (x.lastname.lower(), x.firstname.lower())
                 )
             elif sortType == 1:
-                _temp_players.sort(key=lambda x: x.tournament_rank)
+                _temp_players.sort(key=lambda x: x.rank)
             for ply in _temp_players:
                 print(
                     f"\t{ply.lastname} {ply.firstname} {ply.birthdate} {ply.sex} {ply.rank} {ply.tournament_rank}"
