@@ -55,18 +55,26 @@ class TournamentView:
             print(text)
 
     @staticmethod
-    def print_tournament_overview(tournament: Tournament):
-        print("Tournament Overview:")
-        print(f"\tName: {tournament.name}")
-        print(f"\tPlace: {tournament.place}")
-        print(f"\tDate: {tournament.date}")
-        print(f"\tDescription: {tournament.description}")
-        print(f"\tAmount of rounds: {tournament.round_amount}")
-        print("\tPlayers:")
-        for ply in tournament.players:
-            print(f"\t\t{ply.lastname} {ply.firstname} {ply.birthdate} {ply.sex} {ply.rank}")
+    def print_tournament_overview(tournament: Tournament, action: int = -1, sortType: int = -1):
+        if action == -1 :
+            print("Tournament Overview:")
+            print(f"\tName: {tournament.name}")
+            print(f"\tPlace: {tournament.place}")
+            print(f"\tDate: {tournament.date}")
+            print(f"\tDescription: {tournament.description}")
+            print(f"\tAmount of rounds: {tournament.round_amount}")
+        elif action == 0:
+            _temp_players = tournament.players.copy()
+            print("Players:")
+            if sortType == 0:
+                _temp_players.sort(key=lambda x: (x.lastname.lower(), x.firstname.lower()))
+            elif sortType == 1:
+                _temp_players.sort(key=lambda x: x.tournament_rank)
+            for ply in _temp_players:
+                print(f"\t{ply.lastname} {ply.firstname} {ply.birthdate} {ply.sex} {ply.rank} {ply.tournament_rank}")
 
-        print("\tMatchs:")
-        for rnd_number, rnd in enumerate(tournament.matches):
-            print(f"\t\tRound N°{rnd_number}:")
-            TournamentView.print_matches(rnd, "\t\t\t")
+        elif action == 1:
+            print("Matchs:")
+            for rnd_number, rnd in enumerate(tournament.matches):
+                print(f"\tRound N°{rnd_number}:")
+                TournamentView.print_matches(rnd, "\t\t")

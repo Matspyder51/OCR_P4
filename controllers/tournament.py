@@ -150,7 +150,7 @@ class TournamentController:
             if len(self._tournament.matches) >= self._tournament.round_amount and self._tournament.is_all_matches_of_round_ended():
                 self._tournament.ended = True
                 self._tournament.save_tournament()
-                self._view.print_tournament_overview(self._tournament)
+                self.tournament_overview()
                 return
 
             if self._tournament.is_all_matches_of_round_ended():
@@ -161,6 +161,17 @@ class TournamentController:
             else:
                 self._view.print_matches_list(self._tournament.matches[self._tournament.current_round], self._tournament.current_round)
                 self.enter_match_result()
+
+    def tournament_overview(self):
+        self._view.print_tournament_overview(self._tournament)
+
+        selected = int(input("Enter 0 to print tournament players, 1 to print matches: "))
+
+        if selected == 0:
+            sort = int(input("Enter 0 to print players sorted by their name, or 1 to sort them from their score: "))
+            self._view.print_tournament_overview(self._tournament, 0, sort)
+        elif selected == 1:
+            self._view.print_tournament_overview(self._tournament, 1)
 
     def list_tournaments(self):
         tournaments = tournament_model.Tournament.get_tournaments()
@@ -179,7 +190,7 @@ class TournamentController:
         final = next(x for x in tournaments if x.doc_id == selected)
         self.__load_tournament(final, False)
 
-        self._view.print_tournament_overview(self._tournament)
+        self.tournament_overview()
 
     def enter_match_result(self):
         matchId = int(input("Please enter the id of the match : "))
@@ -205,7 +216,7 @@ class TournamentController:
             self.enter_match_result()
         else:
             if self._tournament.round_amount - 1 <= self._tournament.current_round:
-                self._view.print_tournament_overview(self._tournament)
+                self.tournament_overview()
                 self._tournament.ended = True
                 self._tournament.save_tournament()
             else:

@@ -15,6 +15,7 @@ class Controller:
         self.__players_controller = players.PlayersController()
 
         while True:
+            self.__tournament_controller._tournament = None
             self.__parse_user_action(self.__home_controller.input_home_menu())
 
     def __parse_user_action(self, action: int):
