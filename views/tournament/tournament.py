@@ -9,14 +9,17 @@ class TournamentView:
 
     @staticmethod
     def print_player_added(name: str):
+        """Print a message indicating than a player has been added to the tournament"""
         print(f"{Fore.GREEN}Player added : {Fore.RESET}{name}")
 
     @staticmethod
     def print_error(error: str):
+        """Print an error to the user"""
         print(f"{Fore.RED}Error: {Fore.RESET}{error}")
 
     @staticmethod
     def print_players_list(players: list):
+        """Print list of players"""
         for ply in players:
             print(
                 f"{ply.doc_id} - {ply['lastname']} {ply['firstname']} {ply['sex']} {ply['birthdate']}"
@@ -24,6 +27,7 @@ class TournamentView:
 
     @staticmethod
     def print_matches_list(matches: list, round_number: int):
+        """Print matchs list of current round"""
         i = 0
         print(f"Round number {round_number + 1} :")
         for match in matches:
@@ -39,11 +43,13 @@ class TournamentView:
 
     @staticmethod
     def print_tournaments_list(tournaments: list):
+        """Print list of tournaments"""
         for trn in tournaments:
             print(f"{trn.doc_id} : {trn['name']} | {trn['date']}")
 
     @staticmethod
     def print_matches(matches: list, indent: str = ""):
+        """Print list of matches"""
         for match in matches:
             text = indent
             text += f"{Fore.GREEN if match.winnedBy == 0 else Fore.RED}"
@@ -60,6 +66,7 @@ class TournamentView:
     def print_tournament_overview(
         tournament: Tournament, action: int = -1, sortType: int = -1
     ):
+        """Manage tournament overview"""
         if action == -1:
             print("Tournament Overview:")
             print(f"\tName: {tournament.name}")

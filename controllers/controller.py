@@ -19,6 +19,7 @@ class Controller:
             self.__parse_user_action(self.__home_controller.input_home_menu())
 
     def __parse_user_action(self, action: int):
+        """Parse the input of the getted from home controller"""
         if action == 1:
             self.__tournament_controller.create_new_tournament()
         elif action == 2:

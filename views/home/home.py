@@ -5,10 +5,12 @@ class HomeView:
 
     @staticmethod
     def print_start_message():
+        """Print the welcome message"""
         print(f"Welcome in {Fore.GREEN}ChessTournamentManager {Fore.YELLOW}version 0.0.1")
 
     @staticmethod
     def print_home_menu():
+        """Print the home menu"""
         print("Type \"quit\" to exit the program")
         print("Home menu :")
         print(f"{Fore.RED}[1] {Fore.RESET}Create a new tournament")
@@ -18,4 +20,5 @@ class HomeView:
 
     @staticmethod
     def print_home_menu_selection_error(error: str):
+        """Print an error passed in parameter"""
         print(f"{Fore.RED}Your entry is incorrect: {error}")

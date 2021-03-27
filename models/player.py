@@ -14,6 +14,7 @@ class Player:
 
     @property
     def get_id(self):
+        """Return the doc id of database of the player"""
         return self.__id
 
     def __init__(self, data: list, id: int = None, tournament_rank: int = 0.0):
@@ -27,10 +28,12 @@ class Player:
             self.__id = id
 
     def update_in_json(self):
+        """Save the rank of the player in database"""
         table = get_table("players")
         table.update({"rank": self.rank}, doc_ids=[self.__id])
 
     def add_player_in_json(self):
+        """Add the player in database"""
         table = get_table("players")
         id = table.insert(
             {
@@ -44,6 +47,7 @@ class Player:
         self.__id = id
 
     def to_database(self, light: bool = False):
+        """Return data of the player for database"""
         if not light:
             return {
                 "id": self.__id,
@@ -54,6 +58,7 @@ class Player:
 
     @staticmethod
     def get_player_from_name(name: str):
+        """Get players list matching the name"""
         table = get_table("players")
         ply = Query()
 
@@ -67,6 +72,7 @@ class Player:
 
     @staticmethod
     def get_player_from_id(id: int):
+        """Get player from doc_id"""
         table = get_table("players")
 
         return table.get(doc_id=id)

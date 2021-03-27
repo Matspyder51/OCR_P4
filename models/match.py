@@ -24,6 +24,7 @@ class Match:
             return False
 
     def to_dict(self):
+        """Return the match object in dictionary format for database"""
         return {
             "upPlayer": self.upPlayer.to_database(True),
             "downPlayer": self.downPlayer.to_database(True),
@@ -35,6 +36,7 @@ class Match:
 
     @staticmethod
     def from_dict(upPlayer: Player, downPlayer: Player, data):
+        """Make a match from a dictionary getted from database"""
         match = Match()
         match.ended = data["ended"]
         match.winnedBy = data["winnedBy"]

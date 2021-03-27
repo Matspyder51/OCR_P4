@@ -10,6 +10,7 @@ class HomeController:
         self._view.print_start_message()
 
     def input_home_menu(self):
+        """Show the home menu and wait for the input"""
         self._view.print_home_menu()
         entry = input("Please enter the number of the menu you want to select : ")
         if entry == "quit":

@@ -10,6 +10,7 @@ class PlayersController:
         self._view = players.PlayersView()
 
     def change_player_rank(self):
+        """Start player rank change process"""
         player_name = input("Please enter the name of the player to manage: ")
         possible_players = Player.get_player_from_name(player_name)
         self._view.print_players_list(possible_players)

@@ -18,6 +18,7 @@ class Tournament:
     ended: bool = False
 
     def __init_players_from_indices(self, data):
+        """Initialize players from database dictionary"""
         for ply in data:
             ply_data = player.Player.get_player_from_id(ply["id"])
             self.players.insert(len(self.players), player.Player(
@@ -33,6 +34,7 @@ class Tournament:
             ))
 
     def load_from_database(self, data):
+        """Load the tournament from database dictionary"""
         self.__id = data.doc_id
         self.name = data["name"]
         self.place = data["place"]
@@ -58,12 +60,12 @@ class Tournament:
             i += 1
 
     def add_player(self, ply: player.Player):
+        """Add a player in tournament"""
         if self.players.count(ply) == 0:
             self.players.insert(len(self.players), ply)
-        else:
-            print("This player is already in tournament")
 
     def __get_players_infos(self):
+        """Export players list in database format"""
         results = []
         for ply in self.players:
             results.insert(len(results), ply.to_database())
@@ -71,6 +73,7 @@ class Tournament:
         return results
 
     def __get_matches(self):
+        """Export matches list in database format"""
         results = []
         for i in range(len(self.matches)):
             results.insert(i, [])
@@ -80,11 +83,13 @@ class Tournament:
         return results
 
     def __get_ply_from_id(self, id):
+        """Get the player in tournament from doc_id"""
         for ply in self.players:
             if ply.get_id == id:
                 return ply
 
     def save_tournament(self):
+        """Save tournament data in database"""
         table = get_table("tournaments")
 
         data = {
@@ -105,6 +110,7 @@ class Tournament:
             self.__id = table.insert(data)
 
     def is_all_matches_of_round_ended(self):
+        """Return a boolean indicate if all matches are ended in the round"""
         if self.current_round == -1 or len(self.matches[self.current_round]) == 0:
             return True
 
@@ -116,6 +122,7 @@ class Tournament:
 
     @staticmethod
     def get_tournaments():
+        """Return list of tournaments wich aren't ended"""
         table = get_table("tournaments")
         trn = Query()
 
@@ -125,12 +132,14 @@ class Tournament:
 
     @staticmethod
     def get_all_tournaments():
+        """Return list of all tournaments"""
         table = get_table("tournaments")
 
         return table
 
     @staticmethod
     def get_ended_tournaments():
+        """Return list of ended tournaments"""
         table = get_table("tournaments")
         trn = Query()
 

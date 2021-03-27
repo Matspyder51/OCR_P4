@@ -12,15 +12,18 @@ class TournamentController:
 
     @property
     def players(self):
+        """Return list of players in current tournament"""
         return self._tournament.players
 
     def __init__(self):
         self._view = tournament.TournamentView()
 
     def start_new_tournament(self):
+        """Initialize a new tournament in controller"""
         self._tournament = tournament_model.Tournament()
 
     def add_player(self, ply: player.Player, is_new: bool = False):
+        """Add a player in current tournament"""
         self._tournament.add_player(ply)
 
         if is_new:
@@ -29,6 +32,7 @@ class TournamentController:
         self._view.print_player_added(f"{ply.lastname} {ply.firstname}")
 
     def add_players_in_tournament(self):
+        """Start the process of adding all players in new tournament"""
         while len(self.players) != 8:
             is_new_player: bool = to_boolean(input("Is this a new player ? (Y/N) : "))
             lastname: str
@@ -71,6 +75,7 @@ class TournamentController:
                 )
 
     def create_new_tournament(self):
+        """Ask user to enter data for a new tournament"""
         self._tournament = tournament_model.Tournament()
         self._tournament.name = input("Please enter tournament name : ")
         self._tournament.place = input("Please enter the place of the tournament : ")
@@ -86,6 +91,7 @@ class TournamentController:
         self.generate_matches(True)
 
     def __get_next_opponent_for_player(self, ply, players):
+        """Return the next opponent for a player"""
         opponent: player.Player
 
         for user in players:
@@ -103,6 +109,7 @@ class TournamentController:
         return opponent
 
     def generate_matches(self, first_round: bool = False):
+        """Generate the list of all matchs for a new round"""
         self._tournament.current_round += 1
         self._tournament.matches.append([])
         matches = []
@@ -144,6 +151,7 @@ class TournamentController:
         self.enter_match_result()
 
     def __load_tournament(self, data, start: bool = False):
+        """Load a tournament from database"""
         self._tournament = tournament_model.Tournament()
         self._tournament.load_from_database(data)
 
@@ -171,6 +179,7 @@ class TournamentController:
                 self.enter_match_result()
 
     def tournament_overview(self):
+        """Show tournament overview"""
         self._view.print_tournament_overview(self._tournament)
 
         selected = int(
@@ -188,6 +197,7 @@ class TournamentController:
             self._view.print_tournament_overview(self._tournament, 1)
 
     def list_tournaments(self):
+        """Send a list of ended tournaments"""
         tournaments = tournament_model.Tournament.get_tournaments()
 
         self._view.print_tournaments_list(tournaments)
@@ -197,6 +207,7 @@ class TournamentController:
         self.__load_tournament(final)
 
     def list_all_tournaments(self):
+        """Send a list of all tournaments"""
         tournaments = tournament_model.Tournament.get_all_tournaments()
         self._view.print_tournaments_list(tournaments)
 
@@ -207,6 +218,7 @@ class TournamentController:
         self.tournament_overview()
 
     def enter_match_result(self):
+        """Take user inputs for match results"""
         matchId = int(input("Please enter the id of the match : "))
         match = self._tournament.matches[self._tournament.current_round][matchId]
         if match.ended:
