@@ -4,8 +4,6 @@ import datetime
 
 
 class TournamentView:
-    def __init__(self):
-        pass
 
     @staticmethod
     def print_player_added(name: str):
