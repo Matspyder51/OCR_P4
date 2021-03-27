@@ -14,7 +14,8 @@ class Controller:
         self.__home_controller = home.HomeController()
         self.__players_controller = players.PlayersController()
 
-        self.__parse_user_action(self.__home_controller.input_home_menu())
+        while True:
+            self.__parse_user_action(self.__home_controller.input_home_menu())
 
     def __parse_user_action(self, action: int):
         if action == 1:
