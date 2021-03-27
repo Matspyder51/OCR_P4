@@ -204,7 +204,7 @@ class TournamentController:
 
         selected = int(input("Please enter the id of the tournament to load: "))
         final = next(x for x in tournaments if x.doc_id == selected)
-        self.__load_tournament(final)
+        self.__load_tournament(final, True)
 
     def list_all_tournaments(self):
         """Send a list of all tournaments"""
@@ -219,7 +219,10 @@ class TournamentController:
 
     def enter_match_result(self):
         """Take user inputs for match results"""
-        matchId = int(input("Please enter the id of the match : "))
+        user_input = input("Please enter the id of the match or 'quit' to go back in home menu: ")
+        if user_input == "quit":
+            return
+        matchId = int(user_input)
         match = self._tournament.matches[self._tournament.current_round][matchId]
         if match.ended:
             return self.enter_match_result()
