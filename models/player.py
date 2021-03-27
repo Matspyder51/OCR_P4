@@ -28,8 +28,7 @@ class Player:
 
     def update_in_json(self):
         table = get_table("players")
-        ply = table.get(doc_id=self.__id)
-        ply.update({"rank": self.rank})
+        table.update({"rank": self.rank}, doc_ids=[self.__id])
 
     def add_player_in_json(self):
         table = get_table("players")
