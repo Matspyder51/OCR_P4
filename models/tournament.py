@@ -19,6 +19,7 @@ class Tournament:
 
     def __init_players_from_indices(self, data):
         """Initialize players from database dictionary"""
+        self.players = []
         for ply in data:
             ply_data = player.Player.get_player_from_id(ply["id"])
             self.players.insert(len(self.players), player.Player(
