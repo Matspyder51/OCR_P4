@@ -33,7 +33,7 @@ class TournamentController:
 
     def add_players_in_tournament(self):
         """Start the process of adding all players in new tournament"""
-        while len(self.players) != 8:
+        while len(self.players) != 2:
             is_new_player: bool = to_boolean(input("Is this a new player ? (Y/N) : "))
             lastname: str
             firstname: str
@@ -92,7 +92,7 @@ class TournamentController:
 
     def __get_next_opponent_for_player(self, ply, players):
         """Return the next opponent for a player"""
-        opponent: player.Player
+        opponent: player.Player = None
 
         for user in players:
             m = Match(ply, user)
@@ -139,6 +139,10 @@ class TournamentController:
                 current = _temp_players[0]
                 _temp_players.remove(current)
                 opponent = self.__get_next_opponent_for_player(current, _temp_players)
+
+                if opponent == None:
+                    self._view.print_error('No opponent found for a player')
+                    return
 
                 matches.insert(len(matches), Match(current, opponent))
 
