@@ -33,7 +33,7 @@ class TournamentController:
 
     def add_players_in_tournament(self):
         """Start the process of adding all players in new tournament"""
-        while len(self.players) != 2:
+        while len(self.players) != 8:
             is_new_player: bool = to_boolean(input("Is this a new player ? (Y/N) : "))
             lastname: str
             firstname: str
